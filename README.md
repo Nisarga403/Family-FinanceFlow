@@ -146,7 +146,7 @@ Follow these steps exactly to solve the connection problem.
     # === Database Credentials ===
     DB_HOST=localhost
     DB_USER=root
-    DB_PASSWORD=nisarga@202003
+    DB_PASSWORD=password
     DB_NAME=finance_flow
 
     # === JWT Secret for signing authentication tokens ===
