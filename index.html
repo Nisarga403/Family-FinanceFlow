@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personal Finance Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            primary: { // Brown tones (from TW Orange)
+              DEFAULT: '#c2410c',
+              '50': '#fff7ed',
+              '100': '#ffedd5',
+              '200': '#fed7aa',
+              '300': '#fdba74',
+              '400': '#fb923c',
+              '500': '#f97316',
+              '600': '#ea580c',
+              '700': '#c2410c',
+              '800': '#9a3412',
+              '900': '#7c2d12',
+              '950': '#431407',
+            },
+            slate: { // These are "stone" colors (gray tones), kept as "slate" to avoid breaking classes
+                '50': '#fafaf9',
+                '100': '#f5f5f4',
+                '200': '#e7e5e4',
+                '300': '#d6d3d1',
+                '400': '#a8a29e',
+                '500': '#78716c',
+                '600': '#57534e',
+                '700': '#44403c',
+                '800': '#292524',
+                '900': '#1c1917',
+                '950': '#0c0a09'
+            },
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: 0, transform: 'translateY(10px)' },
+              '100%': { opacity: 1, transform: 'translateY(0)' },
+            },
+            'fade-in-up': {
+              '0%': { opacity: 0, transform: 'translateY(15px)' },
+              '100%': { opacity: 1, transform: 'translateY(0)' },
+            },
+            blink: {
+              '0%, 90%, 100%': { transform: 'scaleY(1)' },
+              '95%': { transform: 'scaleY(0.1)' },
+            },
+            'gentle-pulse': {
+              '0%, 100%': { transform: 'scale(1)' },
+              '50%': { transform: 'scale(1.05)' },
+            },
+            float: {
+              '0%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-8px)' },
+              '100%': { transform: 'translateY(0px)' },
+            }
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.5s ease-out forwards',
+            'fade-in-up': 'fade-in-up 0.5s ease-out forwards',
+            'blink': 'blink 4s infinite',
+            'gentle-pulse': 'gentle-pulse 2.5s ease-in-out infinite',
+            'float': 'float 6s ease-in-out infinite',
+          }
+        },
+      },
+    };
+  </script>
+  <style>
+    html {
+      color-scheme: light;
+    }
+    html.dark {
+      color-scheme: dark;
+    }
+    body.animated-bg {
+      background-color: #F6EFE5; /* Fallback color from the image */
+      background-image:
+        /* Vignette effect to fade edges */
+        radial-gradient(ellipse at center, transparent 40%, #F6EFE5 95%),
+        /* New background image */
+        url('data:image/jpeg;base64,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JJJJJ/qSSSSSSSSSSSSSSSSSSSSSSf6gkkkkkkkkkkkkkkkkkkkn+oJJJJJJJJJJJJJJJJJJJJJ/qSSSSSSSSSSSSSSSSSSSSSSf6gkkkkkkkkkkkkkkkkkkkn+oJJJJJJJJJJJJJJJJJJJJJ/qSSSSSSSSSSSSSSSSSSSSSSf6gkkkkkkkkkkkkkkkkkkkn+oJJJJJJJJJJJJJJJJJJJJJ/qSSSSSSSSSSSSSSSSSSSSSSf6gkkkkkkkkkkkkkkkkkkkn+oJJJJJJJJJJJJJJJJJJJJJ/qSSSSSSSSSSSSSSSSSSSSSSf6gkkkkkkkkkkkkkkkkkkkn+oJJJJJJJJJJJJJJJJJJJJJ/qSSSSSSSSSSSSSSSSSSSSSSf6gkkkkkkkkkkkkkkkkkkkn+oJJJJJJJJJJJJJJJJJJJJJ/qSSSSSSSSSSSSSSSSSSSSSSf6gkkkkkkkkkkkkkkkkkkkn+oJJJJJJJJJJJJJJJJJJJJJ/qSSSSSSSSSSSSSSSSSSSSSSf6gkkkkkkkkkkkkkkkkkkkn+oJJJJJJJJJJJJJJJJJJJJJ/qSSSSSSSSSSSSSSSSSSSSSSf6gkkkkkkkkkkkkkkkkkkkn+oJJJJJJJJJJJJJJJJJJJJJ/qSSSSSSSSSSSSSSSSSSSSSSf6gkkkkkkkkkkkkkkkkkkkn+oJJJJJJJJJJJJJJJJJJJJJ/qSSSSSSSSSSSSSSSSSSSSSSf6gkkkkkkkkkkkkkkkkkkkn+oJJJJJJJJJJJJJJJJJJJJJ/qSSSSSSSSSSSSSSSSSSSSSSf6gkkkkkkkkkkkkkkkkkkkn+oJJJJJJJJJJJJJJJJJJJJJ/qSSSSSSSSSSSSSSSSSSSSSSf6gkkkkkkkkkkkkkkkkkkkn+oJJJJJJJJJJJJJJJJJJJJJ/qSSSSSSSSSSSSSSSSSSSSSSf6gkkkkkkkkkkkkkkkkkkkn+oJJJJJJJJJJJJJJJJJJJJJ/qSSSSSSSSSSSSSSSSSSSSSSf6-');
+      background-size: cover;
+      background-position: center bottom; /* Position the leaves at the bottom */
+      background-attachment: fixed;
+    }
+    html.dark body.animated-bg {
+      background-color: #0c0a09; /* slate-950 */
+      background-image: radial-gradient(ellipse at center, transparent 50%, #0c0a09 95%);
+    }
+    @keyframes blink-animation {
+      0%, 90%, 100% {
+        transform: scaleY(1);
+      }
+      95% {
+        transform: scaleY(0.1);
+      }
+    }
+    .robot-eyes {
+      animation: blink-animation 4s infinite;
+      transform-origin: center;
+    }
+  </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.1.1",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.1/",
+    "react/": "https://esm.sh/react@^19.1.1/",
+    "recharts": "https://esm.sh/recharts@^3.1.2",
+    "jwt-decode": "https://esm.sh/jwt-decode@^4.0.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="animated-bg antialiased">
+  <div id="root"></div>
+  <script type="module" src="./index.tsx"></script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
